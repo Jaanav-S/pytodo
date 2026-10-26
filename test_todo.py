@@ -29,3 +29,11 @@ def test_mark_done_and_clear():
 def test_remove_missing_raises():
     with pytest.raises(KeyError):
         todo.remove([], 5)
+
+
+def test_sort_key_orders_by_priority_then_due():
+    tasks = []
+    todo.add(tasks, "later", due="2030-01-01")
+    todo.add(tasks, "soon", due="2026-01-01")
+    todo.add(tasks, "urgent", priority="high")
+    assert [t["title"] for t in sorted(tasks, key=todo.sort_key)] == ["urgent", "soon", "later"]
