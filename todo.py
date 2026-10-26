@@ -75,3 +75,23 @@ def format_task(task, today=None):
         overdue = not task["done"] and task["due"] < today
         line += f"  due {task['due']}" + ("  OVERDUE" if overdue else "")
     return line
+
+
+def build_parser():
+    parser = argparse.ArgumentParser(description="Terminal to-do list")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p = sub.add_parser("add", help="add a task")
+    p.add_argument("title")
+    p.add_argument("--priority", choices=PRIORITIES, default="normal")
+    p.add_argument("--due", help="due date as YYYY-MM-DD")
+
+    p = sub.add_parser("list", help="show tasks")
+    p.add_argument("--all", action="store_true", help="include finished tasks")
+
+    for name in ("done", "remove"):
+        p = sub.add_parser(name)
+        p.add_argument("id", type=int)
+
+    sub.add_parser("clear", help="remove finished tasks")
+    return parser
