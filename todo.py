@@ -59,3 +59,19 @@ def clear_done(tasks):
     before = len(tasks)
     tasks[:] = [t for t in tasks if not t["done"]]
     return before - len(tasks)
+
+
+def sort_key(task):
+    return (task["done"], PRIORITIES[task["priority"]], task["due"] or "9999-12-31", task["id"])
+
+
+def format_task(task, today=None):
+    today = today or date.today().isoformat()
+    box = "[x]" if task["done"] else "[ ]"
+    line = f"{task['id']:>3} {box} {task['title']}"
+    if task["priority"] != "normal":
+        line += f"  ({task['priority']})"
+    if task["due"]:
+        overdue = not task["done"] and task["due"] < today
+        line += f"  due {task['due']}" + ("  OVERDUE" if overdue else "")
+    return line
