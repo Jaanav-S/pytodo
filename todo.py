@@ -44,3 +44,11 @@ def find(tasks, task_id):
         if task["id"] == task_id:
             return task
     raise KeyError(f"no task with id {task_id}")
+
+
+def mark_done(tasks, task_id):
+    find(tasks, task_id)["done"] = True
+
+
+def remove(tasks, task_id):
+    tasks.remove(find(tasks, task_id))
