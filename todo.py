@@ -11,3 +11,10 @@ PRIORITIES = {"high": 0, "normal": 1, "low": 2}
 
 def default_path():
     return Path(os.environ.get("TODO_FILE", "todo.json"))
+
+
+def load(path):
+    """Load tasks from disk, returning an empty list if the file is missing."""
+    if not path.exists():
+        return []
+    return json.loads(path.read_text(encoding="utf-8"))
