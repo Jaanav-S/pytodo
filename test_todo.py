@@ -24,3 +24,8 @@ def test_mark_done_and_clear():
     todo.mark_done(tasks, 1)
     assert todo.clear_done(tasks) == 1
     assert [t["title"] for t in tasks] == ["b"]
+
+
+def test_remove_missing_raises():
+    with pytest.raises(KeyError):
+        todo.remove([], 5)
