@@ -37,3 +37,8 @@ def test_sort_key_orders_by_priority_then_due():
     todo.add(tasks, "soon", due="2026-01-01")
     todo.add(tasks, "urgent", priority="high")
     assert [t["title"] for t in sorted(tasks, key=todo.sort_key)] == ["urgent", "soon", "later"]
+
+
+def test_format_task_marks_overdue():
+    task = {"id": 1, "title": "pay rent", "priority": "normal", "due": "2026-01-01", "done": False}
+    assert "OVERDUE" in todo.format_task(task, today="2026-02-01")
