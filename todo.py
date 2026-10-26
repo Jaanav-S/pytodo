@@ -95,3 +95,31 @@ def build_parser():
 
     sub.add_parser("clear", help="remove finished tasks")
     return parser
+
+
+def main(argv=None):
+    args = build_parser().parse_args(argv)
+    path = default_path()
+    tasks = load(path)
+
+    if args.command == "add":
+        task = add(tasks, args.title, args.priority, args.due)
+        print(f"Added #{task['id']}: {task['title']}")
+    elif args.command == "list":
+        shown = [t for t in tasks if args.all or not t["done"]]
+        for task in sorted(shown, key=sort_key):
+            print(format_task(task))
+        if not shown:
+            print("Nothing to do.")
+    elif args.command == "done":
+        mark_done(tasks, args.id)
+    elif args.command == "remove":
+        remove(tasks, args.id)
+    elif args.command == "clear":
+        print(f"Removed {clear_done(tasks)} finished task(s).")
+
+    save(path, tasks)
+
+
+if __name__ == "__main__":
+    main()
