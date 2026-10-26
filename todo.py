@@ -18,3 +18,11 @@ def load(path):
     if not path.exists():
         return []
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def save(path, tasks):
+    path.write_text(json.dumps(tasks, indent=2) + "\n", encoding="utf-8")
+
+
+def next_id(tasks):
+    return max((t["id"] for t in tasks), default=0) + 1
