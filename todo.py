@@ -26,3 +26,14 @@ def save(path, tasks):
 
 def next_id(tasks):
     return max((t["id"] for t in tasks), default=0) + 1
+
+
+def add(tasks, title, priority="normal", due=None):
+    """Append a task and return it."""
+    if priority not in PRIORITIES:
+        raise ValueError(f"unknown priority: {priority}")
+    if due is not None:
+        date.fromisoformat(due)  # validates the format
+    task = {"id": next_id(tasks), "title": title, "priority": priority, "due": due, "done": False}
+    tasks.append(task)
+    return task
