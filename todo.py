@@ -37,3 +37,10 @@ def add(tasks, title, priority="normal", due=None):
     task = {"id": next_id(tasks), "title": title, "priority": priority, "due": due, "done": False}
     tasks.append(task)
     return task
+
+
+def find(tasks, task_id):
+    for task in tasks:
+        if task["id"] == task_id:
+            return task
+    raise KeyError(f"no task with id {task_id}")
