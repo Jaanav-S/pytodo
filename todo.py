@@ -52,3 +52,10 @@ def mark_done(tasks, task_id):
 
 def remove(tasks, task_id):
     tasks.remove(find(tasks, task_id))
+
+
+def clear_done(tasks):
+    """Drop finished tasks, returning how many were removed."""
+    before = len(tasks)
+    tasks[:] = [t for t in tasks if not t["done"]]
+    return before - len(tasks)
