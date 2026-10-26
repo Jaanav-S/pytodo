@@ -15,3 +15,12 @@ def test_add_validates_priority_and_date():
         todo.add([], "x", priority="urgent")
     with pytest.raises(ValueError):
         todo.add([], "x", due="next tuesday")
+
+
+def test_mark_done_and_clear():
+    tasks = []
+    todo.add(tasks, "a")
+    todo.add(tasks, "b")
+    todo.mark_done(tasks, 1)
+    assert todo.clear_done(tasks) == 1
+    assert [t["title"] for t in tasks] == ["b"]
