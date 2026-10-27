@@ -42,3 +42,11 @@ def test_sort_key_orders_by_priority_then_due():
 def test_format_task_marks_overdue():
     task = {"id": 1, "title": "pay rent", "priority": "normal", "due": "2026-01-01", "done": False}
     assert "OVERDUE" in todo.format_task(task, today="2026-02-01")
+
+
+def test_save_and_load_roundtrip(tmp_path):
+    path = tmp_path / "todo.json"
+    tasks = []
+    todo.add(tasks, "persist me")
+    todo.save(path, tasks)
+    assert todo.load(path) == tasks
