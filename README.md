@@ -15,3 +15,8 @@ python todo.py clear
 
 `list` shows open tasks first, sorted by priority and then due date.
 Pass `--all` to include finished tasks.
+
+## Storage
+
+Tasks are saved to `todo.json` in the current directory. Set the
+`TODO_FILE` environment variable to use a different file.
